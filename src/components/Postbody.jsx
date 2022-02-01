@@ -52,10 +52,10 @@ const PostBody = ({ authUser, postData }) => {
   };
   function commentToggle(selectedPostid = null) {
     setcommentShow(true);
-    if (postData.commentModal <= 0) {
+    // if (postData.commentModal <= 0) {
       postData.comment_count++
 
-    }
+    // }
     setSelectedPost(selectedPostid.postData);
     setCommentModal(!commentModal);
   };
