@@ -30,7 +30,7 @@ const Comments = ({ postId }) => {
         dispatch, Navigate);
 
       if (res.status != 200) {
-        toast.error(res.statusText)
+        // toast.error(res.statusText)
       }
       setComments(res.data);
       setLoaded(true);
