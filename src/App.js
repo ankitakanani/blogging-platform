@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Routes, Route,Navigate } from "react-router-do
 //pages
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Post from "./pages/Post";
+import Listing from "./components/Listing";
+import PostBody from "./components/Postbody";
 import Write from "./pages/Write";
 import WriteEdit from "./pages/WriteEdit";
 import Login from "./pages/Login";
@@ -37,9 +37,9 @@ function App() {
           <Navbar />
           <Toaster />
           <Routes >
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/posts" element={<Home />} />
-            <Route exact path="/posts/:postId" element={<Post />} />
+            <Route exact path="/" element={<Listing />} />
+            <Route exact path="/posts" element={<Listing />} />
+            <Route exact path="/posts/:postId" element={<PostBody />} />
             <Route path="/write" element={token ? <Write /> : <Navigate to="/login" /> } />
             <Route path="/write/:postId" element={token ? <WriteEdit /> : <Navigate to="/login" /> } />
             <Route path="/login" element={token ? <Navigate to="/" />: <Login /> } />

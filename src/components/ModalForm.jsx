@@ -4,15 +4,13 @@ import { Dialog } from "@headlessui/react"
 import clsx from "clsx"
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
-import Comments from "./Comments";
 
 //context
 import { Context } from "../context/Context";
 import { Api } from '../services/Api.js';
 
-const ModalForm = ({ edit, isOpen, setIsOpen, selectedPost, content }) => {
+const ModalForm = ({ edit, isOpen, setIsOpen, selectedPost,setLoaded }) => {
   const Navigate = useNavigate();
-
   const [commentcontent, setComment] = useState("");
   const [init, setInit] = useState(false)
   const { user, dispatch, isFetching } = useContext(Context);
@@ -20,6 +18,7 @@ const ModalForm = ({ edit, isOpen, setIsOpen, selectedPost, content }) => {
     e.preventDefault();
     setIsOpen(false);
     setInit(false)
+    setLoaded(false)
     const { id } = selectedPost;
     let data = {
       comment: {
@@ -41,12 +40,13 @@ const ModalForm = ({ edit, isOpen, setIsOpen, selectedPost, content }) => {
       toast.error(res.statusText)
     } else {
       toast.success("Your comment has been submitted");
-      return <Comments postId={id} />
     }
+   setLoaded(true)
   };
   async function EditComments(e) {
     e.preventDefault();
     setIsOpen(false);
+    setLoaded(false)
     setInit(false)
     const { id } = selectedPost;
     let data = {
@@ -63,8 +63,8 @@ const ModalForm = ({ edit, isOpen, setIsOpen, selectedPost, content }) => {
 
     } else {
       toast.success("Your comment has been changed")
-      return <Comments postId={id} />
     }
+    setLoaded(true)
   };
 
   return (
@@ -82,7 +82,7 @@ const ModalForm = ({ edit, isOpen, setIsOpen, selectedPost, content }) => {
           <div className="px-2 pb-2">
             <label htmlFor="content" className="flex text-sm block font-bold pb-2 justify-start	">COMMENT CONTENT</label>
             <textarea required
-              name="content" value={!init ? content : commentcontent}
+              name="content" value={!init && selectedPost!=null? selectedPost.content : commentcontent}
               onChange={(e) => {
                 setComment(e.target.value)
                 setInit(true)
