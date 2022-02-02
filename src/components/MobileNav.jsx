@@ -1,8 +1,16 @@
 import { useState } from 'react'
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { Context } from "../context/Context";
+
 
 const MobileNav = (headerNavLinks) => {
   const [navShow, setNavShow] = useState(false)
+  const Navigate = useNavigate();
+  const { dispatch } = useContext(Context);
+
   const onToggleNav = () => {
     setNavShow((status) => {
       if (status) {
@@ -14,7 +22,13 @@ const MobileNav = (headerNavLinks) => {
       return !status
     })
   }
+  const handleLogout = () => {
+    onToggleNav()
+    toast.success("Successfully logged out")
+    dispatch({ type: "LOGOUT" });
+    Navigate('/login');
 
+  };
   return (
     <div className="sm:hidden">
       <button
@@ -57,13 +71,21 @@ const MobileNav = (headerNavLinks) => {
         <nav className="fixed h-full mt-8">
           {headerNavLinks.headerNavLinks.map((link) => (
             <div className="px-12 py-4">
+               {link.title == "LOGOUT" ?
+                  <a onClick={handleLogout}
+                    key={link.title}
+                    className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                  >
+                    {link.title}
+                  </a>
+                  :
               <Link to={link.navLink}
                 key={link.title}
                 className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
                 onClick={onToggleNav}
               >
                 {link.title}
-              </Link>
+              </Link>}
             </div>
           ))}
         </nav>
