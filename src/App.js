@@ -43,7 +43,7 @@ function App() {
             <Route path="/write" element={token ? <Write /> : <Navigate to="/login" /> } />
             <Route path="/write/:postId" element={token ? <WriteEdit /> : <Navigate to="/login" /> } />
             <Route path="/login" element={token ? <Navigate to="/" />: <Login /> } />
-            <Route path="/register" element={token ? <Navigate to="/" />: <Login /> } />
+            <Route path="/register" element={token ? <Navigate to="/" />: <Register /> } />
             <Route path='*' element={<FourZeroFour />} />
           </Routes>
           <Footer />
